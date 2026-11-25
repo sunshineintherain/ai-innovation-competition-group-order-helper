@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Campus Group Order Assistant · Presentation</title>
+<style>
+:root{color-scheme:light;--ink:#142f29;--accent:#00694d;--paper:#f8f6ef}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:clamp(18px,2.25vw,34px)/1.4 Arial,sans-serif}main{max-width:1440px;margin:auto}section{padding:clamp(24px,6vw,90px);min-height:93svh;display:flex;flex-direction:column;justify-content:center}section[hidden]{display:none}header{font-size:.55em;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-weight:bold}h1,h2{font-family:Georgia,serif;font-weight:400;line-height:1.08;letter-spacing:-.035em;max-width:25ch;margin:.42em 0;font-size:clamp(36px,5.6vw,85px)}h1{font-size:clamp(50px,8.5vw,130px);max-width:16ch}p{max-width:52ch;margin:.4em 0}strong{color:var(--accent)}table{border-collapse:collapse;width:min(100%,1050px);margin:.6em 0}td,th{text-align:left;padding:.36em .45em;border-bottom:1px solid #9eb4a8}th{font-size:.7em;color:var(--accent)}tr:last-child{font-weight:bold}small{font-size:.65em;color:#345649;margin-top:1.3em;max-width:75ch}nav{display:flex;align-items:center;justify-content:flex-end;gap:1em;padding:10px clamp(16px,5vw,70px);font:15px Arial,sans-serif}button{border:1px solid #6c877a;border-radius:20px;color:var(--ink);background:transparent;padding:8px 18px;font:inherit;cursor:pointer}button:disabled{opacity:.4}a{color:var(--accent)}@media print{section,section[hidden]{display:flex;min-height:96vh;break-after:page}nav{display:none}}@media(max-width:600px){section{min-height:84svh}table{font-size:.86em}nav{justify-content:center}}
+</style></head><body><main>
+<section><header>XMUM AI Agent Innovation Competition 2026</header>
+<h1>Campus Group Order Assistant</h1>
+<p>Can two students share a lunch order, make their next class and both pay less?</p>
+<small>Demo merchant · Simulated offer · All times in Malaysia</small></section>
+<section><header>The campus lunch decision</header><h2>Fifteen minutes in common</h2>
+<p><strong>Aster</strong> finishes class at 12:20, wants a RM12 lunch set and must collect by 12:50.</p>
+<p><strong>Birch</strong> wants a RM10 rice bowl and can collect from 12:35 to 13:00.</p>
+<p>In a group chat, someone has to compare the windows, check which items count and ask everyone again when plans change.</p>
+<small>Fictional scenario at the Atrium counter · Common window 12:35–12:50</small></section>
+<section><header>Proposed solution</header><h2>One request per student</h2>
+<p>“I want the RM12 lunch set from Demo Café. I can pick it up between 12:20 and 12:50 today.”</p>
+<p>The assistant finds the catalog item and shows editable pickup details. A missing field triggers a focused question.</p>
+<p>Each new request, withdrawal or price change gives the assistant a reason to check the board again.</p>
+<small>The shared board uses fictional aliases and a listed public pickup point.</small></section>
+<section><header>Simulated offer · Demo Café</header><h2>Two lunches for RM18</h2>
+<table><thead><tr><th>Student</th><th>Best solo</th><th>Group share</th><th>Net saving</th></tr></thead><tbody><tr><td>Aster</td><td>RM12.00</td><td>RM9.82</td><td>RM2.18</td></tr><tr><td>Birch</td><td>RM10.00</td><td>RM8.18</td><td>RM1.82</td></tr><tr><td>Total</td><td>RM22.00</td><td>RM18.00</td><td>RM4.00</td></tr></tbody></table>
+<p>RM4 off RM20 in eligible items. No fee. Confirm by 12:25 for 10 minutes of preparation and pickup at 12:35.</p>
+<small>Shares follow the original item totals. Largest fractional remainders receive the remaining sen.</small></section>
+<section><header>Live demonstration</header><h2>When Birch is delayed</h2>
+<p><strong>12:55.</strong> Birch changes the earliest pickup. Aster must leave at 12:50, so the old proposal disappears.</p>
+<p><strong>12:30.</strong> Clover can collect a RM10 bowl between 12:30 and 12:45. Aster and Clover now qualify for RM4 off.</p>
+<p>Both students confirm their own price and time. The shared summary records who collects, where and when.</p>
+<small>Separate three-person test · At a RM30 threshold, RM12 + RM10 falls short. Another RM10 request unlocks RM4 off RM32.</small></section>
+<section><header>Technical implementation</header><h2>How a proposal is made</h2>
+<p><strong>Read the intent.</strong> Match English input to the catalog. The offline parser works independently of an optional local model.</p>
+<p><strong>Check the board.</strong> Find common windows, price solo and shared baskets in integer sen, then select disjoint groups with the highest total net saving.</p>
+<p><strong>Track consent.</strong> The server keeps proposal versions and confirmations. A change in terms requires a fresh confirmation.</p>
+<small>The English activity log comes from the matching and state transitions that actually ran.</small></section>
+<section><header>Evidence and pilot design</header><h2>What a pilot would measure</h2>
+<p><strong>Simulated result.</strong> One compatible pair saves RM4. A five-minute gap prevents that pair from matching.</p>
+<p><strong>Next merchant.</strong> Review an authorized public catalog, locate each offer clause, correct uncertain terms and activate the reviewed rules.</p>
+<p><strong>Pilot measures.</strong> Count confirmed groups, net savings and changes before pickup. Ask students whether the suggested window worked.</p>
+<small>Local single-board prototype · 12 active requests · Fixed-value offers · Real adoption and collection reliability remain unmeasured.</small></section>
+</main><nav aria-label="Slide navigation"><button id="prev" type="button">Previous</button><output aria-live="polite"></output><button id="next" type="button">Next</button></nav>
+<script>
+const pages=[...document.querySelectorAll('section')], prev=document.querySelector('#prev'), next=document.querySelector('#next'), output=document.querySelector('output');
+function show(n){const i=Math.min(pages.length-1,Math.max(0,Number(n)||0));pages.forEach((p,k)=>p.hidden=k!==i);prev.disabled=i===0;next.disabled=i===pages.length-1;output.textContent=(i+1)+' / '+pages.length;return i}
+let current=show(Number(location.hash.slice(1))-1);function move(delta){current=show(current+delta);history.replaceState(null,'','#'+(current+1));scrollTo(0,0)}
+prev.onclick=()=>move(-1);next.onclick=()=>move(1);document.addEventListener('keydown',e=>{if(e.target.tagName==='BUTTON'&&e.key===' ')return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();move(1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();move(-1)}});
+</script></body></html>

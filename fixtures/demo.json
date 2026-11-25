@@ -1,0 +1,30 @@
+{
+  "id": "cafe",
+  "name": "Demo Café",
+  "demo": true,
+  "point": "Atrium counter",
+  "open": "10:00",
+  "close": "14:00",
+  "cutoff": "13:40",
+  "prep": 10,
+  "fee": 0,
+  "items": [
+    { "id": "lunch", "name": "Lunch Set", "price": 1200 },
+    { "id": "bowl", "name": "Rice Bowl", "price": 1000 }
+  ],
+  "offers": [
+    {
+      "id": "lunch-four",
+      "name": "Lunch Together",
+      "scope": "group",
+      "thresholdBasis": "eligible-subtotal",
+      "threshold": 2000,
+      "discount": 400,
+      "cap": 400,
+      "eligible": ["lunch", "bowl"],
+      "start": "2026-12-01T11:00",
+      "end": "2026-12-01T14:00",
+      "stack": false
+    }
+  ]
+}
